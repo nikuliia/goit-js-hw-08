@@ -72,7 +72,7 @@ const refs = {
 
 function imgTemplate(obj) {
   return `<li class="gallery-item">
-    <a class="gallery-link" href="${obj.original}">
+    <a class="gallery-link" href="${obj.original}" width="360">
       <img
         class="gallery-image"
         src="${obj.preview}"
