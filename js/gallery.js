@@ -68,13 +68,14 @@ console.log(images);
 
 const refs = {
   ulElem: document.querySelector('ul.gallery'),
+  liElem: document.querySelector('.gallery-item'),
 };
 
 function imgTemplate(obj) {
   return `<li class="gallery-item">
     <a class="gallery-link" href="${obj.original}" width="360">
       <img
-        class="gallery-image"
+        class="gallery-image js-img"
         src="${obj.preview}"
         data-source="${obj.original}"
         alt="${obj.description}"
@@ -90,4 +91,15 @@ function imgsTemplate(images) {
 document.addEventListener('DOMContentLoaded', () => {
   const markup = imgsTemplate(images);
   refs.ulElem.innerHTML = markup;
+});
+
+refs.ulElem.addEventListener('click', e => {
+  e.preventDefault();
+  if (!e.target.classList.contains('js-img')) {
+    return;
+  }
+  console.log(e.target);
+
+  const largeImgUrl = e.target.dataset.source;
+  console.log('Big img is blocked! URL is:', largeImgUrl);
 });
