@@ -89,9 +89,11 @@ function imgsTemplate(images) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  const markup = imgsTemplate(images);
-  refs.ulElem.innerHTML = markup;
+  const markup = imgsTemplate(images); // коли я зайшов на сайт створити розмітку
+  refs.ulElem.innerHTML = markup; // і додати її на сайт
 });
+
+//!==========================================================================
 
 refs.ulElem.addEventListener('click', e => {
   e.preventDefault();
@@ -102,4 +104,16 @@ refs.ulElem.addEventListener('click', e => {
 
   const largeImgUrl = e.target.dataset.source;
   console.log('Big img is blocked! URL is:', largeImgUrl);
+
+  const imgDescr = e.target.alt;
+
+  showModal(largeImgUrl, imgDescr);
 });
+
+function showModal(largeImgUrl, imgDescr) {
+  const instance = basicLightbox.create(`
+    <img src="${largeImgUrl}" alt="${imgDescr}" width="1112" height="640">
+`);
+
+  instance.show();
+}
