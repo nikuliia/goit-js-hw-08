@@ -68,7 +68,6 @@ console.log(images);
 
 const refs = {
   ulElem: document.querySelector('ul.gallery'),
-  liElem: document.querySelector('.gallery-item'),
 };
 
 function imgTemplate(obj) {
@@ -100,10 +99,10 @@ refs.ulElem.addEventListener('click', e => {
   if (!e.target.classList.contains('js-img')) {
     return;
   }
-  console.log(e.target);
+  // console.log(e.target);
 
   const largeImgUrl = e.target.dataset.source;
-  console.log('Big img is blocked! URL is:', largeImgUrl);
+  // console.log('Big img is blocked! URL is:', largeImgUrl);
 
   const imgDescr = e.target.alt;
 
@@ -111,9 +110,25 @@ refs.ulElem.addEventListener('click', e => {
 });
 
 function showModal(largeImgUrl, imgDescr) {
-  const instance = basicLightbox.create(`
+  const instance = basicLightbox.create(
+    `
     <img src="${largeImgUrl}" alt="${imgDescr}" width="1112" height="640">
-`);
+`,
+    {
+      onShow: instance => {
+        window.addEventListener('keydown', onEscKeyPress);
+      },
+      onClose: instance => {
+        window.removeEventListener('keydown', onEscKeyPress);
+      },
+    }
+  );
 
   instance.show();
+
+  function onEscKeyPress(e) {
+    if (e.code === 'Escape') {
+      instance.close();
+    }
+  }
 }
